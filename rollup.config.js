@@ -25,7 +25,7 @@ const plugins = (targets, vueOptions = {}) => [
 export default [
   {
     input: pkg.main,
-    plugins: plugins('defaults, not ie 11, not ie_mob 11', {
+    plugins: plugins('iOS >= 12 and Android >= 6', {
       template: {
         optimizeSSR: true
       }
@@ -50,7 +50,7 @@ export default [
   },
   {
     input: legacyPkg.main,
-    plugins: plugins('defaults, not ie 11, not ie_mob 11', {
+    plugins: plugins('iOS >= 12 and Android >= 6', {
       template: {
         optimizeSSR: true
       }
