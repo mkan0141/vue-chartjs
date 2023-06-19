@@ -55,7 +55,7 @@ function _nonIterableSpread() {
   )
 }
 function _objectSpread$1(target) {
-  var _loop = function _loop(i) {
+  for (var i = 1; i < arguments.length; i++) {
     var source = arguments[i] != null ? arguments[i] : {}
     var ownKeys = Object.keys(source)
     if (typeof Object.getOwnPropertySymbols === 'function') {
@@ -69,7 +69,6 @@ function _objectSpread$1(target) {
       _defineProperty$1(target, key, source[key])
     })
   }
-  for (var i = 1; i < arguments.length; i++) _loop(i)
   return target
 }
 function _toConsumableArray(arr) {
@@ -171,6 +170,7 @@ function compareData(newData, oldData) {
 var templateError =
   'Please remove the <template></template> tags from your chart component. See https://vue-chartjs.org/guide/#vue-single-file-components'
 var chartUpdateError = 'Update ERROR: chart instance not found'
+
 function _defineProperty(obj, key, value) {
   if (key in obj) {
     Object.defineProperty(obj, key, {
@@ -185,7 +185,7 @@ function _defineProperty(obj, key, value) {
   return obj
 }
 function _objectSpread(target) {
-  var _loop = function _loop(i) {
+  for (var i = 1; i < arguments.length; i++) {
     var source = arguments[i] != null ? arguments[i] : {}
     var ownKeys = Object.keys(source)
     if (typeof Object.getOwnPropertySymbols === 'function') {
@@ -199,14 +199,9 @@ function _objectSpread(target) {
       _defineProperty(target, key, source[key])
     })
   }
-  for (var i = 1; i < arguments.length; i++) _loop(i)
   return target
 }
-var generateChart = function generateChart(
-  chartId,
-  chartType,
-  chartController
-) {
+var generateChart = function (chartId, chartType, chartController) {
   return defineComponent({
     props: {
       chartData: {
@@ -215,7 +210,7 @@ var generateChart = function generateChart(
       },
       chartOptions: {
         type: Object,
-        default: function _default() {}
+        default: function () {}
       },
       datasetIdKey: {
         type: String,
@@ -239,16 +234,16 @@ var generateChart = function generateChart(
       },
       styles: {
         type: Object,
-        default: function _default() {}
+        default: function () {}
       },
       plugins: {
         type: Array,
-        default: function _default() {
+        default: function () {
           return []
         }
       }
     },
-    setup: function setup(props, context) {
+    setup: function (props, context) {
       var renderChart = function renderChart(data, options) {
         if (_chart.value !== null) {
           chartDestroy(toRaw(_chart.value), context)
