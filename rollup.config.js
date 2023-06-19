@@ -40,7 +40,7 @@ export default [
   },
   {
     input: pkg.main,
-    plugins: plugins('defaults and supports es6-module'),
+    plugins: plugins('iOS >= 12 and Android >= 6'),
     external,
     output: {
       format: 'es',
@@ -65,7 +65,7 @@ export default [
   },
   {
     input: legacyPkg.main,
-    plugins: plugins('defaults and supports es6-module'),
+    plugins: plugins('iOS >= 12 and Android >= 6'),
     external,
     output: {
       format: 'es',

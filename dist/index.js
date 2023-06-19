@@ -21,6 +21,73 @@ import {
   isProxy
 } from 'vue'
 
+function _arrayLikeToArray(arr, len) {
+  if (len == null || len > arr.length) len = arr.length
+  for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]
+  return arr2
+}
+function _arrayWithoutHoles(arr) {
+  if (Array.isArray(arr)) return _arrayLikeToArray(arr)
+}
+function _defineProperty$1(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    })
+  } else {
+    obj[key] = value
+  }
+  return obj
+}
+function _iterableToArray(iter) {
+  if (
+    (typeof Symbol !== 'undefined' && iter[Symbol.iterator] != null) ||
+    iter['@@iterator'] != null
+  )
+    return Array.from(iter)
+}
+function _nonIterableSpread() {
+  throw new TypeError(
+    'Invalid attempt to spread non-iterable instance.\\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.'
+  )
+}
+function _objectSpread$1(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i] != null ? arguments[i] : {}
+    var ownKeys = Object.keys(source)
+    if (typeof Object.getOwnPropertySymbols === 'function') {
+      ownKeys = ownKeys.concat(
+        Object.getOwnPropertySymbols(source).filter(function (sym) {
+          return Object.getOwnPropertyDescriptor(source, sym).enumerable
+        })
+      )
+    }
+    ownKeys.forEach(function (key) {
+      _defineProperty$1(target, key, source[key])
+    })
+  }
+  return target
+}
+function _toConsumableArray(arr) {
+  return (
+    _arrayWithoutHoles(arr) ||
+    _iterableToArray(arr) ||
+    _unsupportedIterableToArray(arr) ||
+    _nonIterableSpread()
+  )
+}
+function _unsupportedIterableToArray(o, minLen) {
+  if (!o) return
+  if (typeof o === 'string') return _arrayLikeToArray(o, minLen)
+  var n = Object.prototype.toString.call(o).slice(8, -1)
+  if (n === 'Object' && o.constructor) n = o.constructor.name
+  if (n === 'Map' || n === 'Set') return Array.from(n)
+  if (n === 'Arguments' || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n))
+    return _arrayLikeToArray(o, minLen)
+}
 var ChartEmits
 ;(function (ChartEmits) {
   ChartEmits['ChartRendered'] = 'chart:rendered'
@@ -47,35 +114,28 @@ function chartDestroy(chart, context) {
   }
 }
 function getChartData(data, datasetIdKey) {
-  const nextData = {
-    labels: typeof data.labels === 'undefined' ? [] : [...data.labels],
+  var nextData = {
+    labels:
+      typeof data.labels === 'undefined' ? [] : _toConsumableArray(data.labels),
     datasets: []
   }
-  setChartDatasets(
-    nextData,
-    {
-      ...data
-    },
-    datasetIdKey
-  )
+  setChartDatasets(nextData, _objectSpread$1({}, data), datasetIdKey)
   return nextData
 }
 function setChartDatasets(oldData, newData, datasetIdKey) {
-  const addedDatasets = []
-  oldData.datasets = newData.datasets.map(nextDataset => {
+  var addedDatasets = []
+  oldData.datasets = newData.datasets.map(function (nextDataset) {
     // given the new set, find it's current match
-    const currentDataset = oldData.datasets.find(
-      dataset => dataset[datasetIdKey] === nextDataset[datasetIdKey]
-    )
+    var currentDataset = oldData.datasets.find(function (dataset) {
+      return dataset[datasetIdKey] === nextDataset[datasetIdKey]
+    })
     // There is no original to update, so simply add new one
     if (
       !currentDataset ||
       !nextDataset.data ||
       addedDatasets.includes(currentDataset)
     ) {
-      return {
-        ...nextDataset
-      }
+      return _objectSpread$1({}, nextDataset)
     }
     addedDatasets.push(currentDataset)
     Object.assign(currentDataset, nextDataset)
@@ -89,29 +149,59 @@ function setChartLabels(chart, labels, context) {
   }
 }
 function setChartOptions(chart, options) {
-  chart.options = {
-    ...options
-  }
+  chart.options = _objectSpread$1({}, options)
 }
 function compareData(newData, oldData) {
   // Get new and old DataSet Labels
-  const newDatasetLabels = newData.datasets.map(dataset => {
+  var newDatasetLabels = newData.datasets.map(function (dataset) {
     return dataset.label
   })
-  const oldDatasetLabels = oldData.datasets.map(dataset => {
+  var oldDatasetLabels = oldData.datasets.map(function (dataset) {
     return dataset.label
   })
   // Check if Labels are equal and if dataset length is equal
   return (
     oldData.datasets.length === newData.datasets.length &&
-    newDatasetLabels.every((value, index) => value === oldDatasetLabels[index])
+    newDatasetLabels.every(function (value, index) {
+      return value === oldDatasetLabels[index]
+    })
   )
 }
-const templateError =
+var templateError =
   'Please remove the <template></template> tags from your chart component. See https://vue-chartjs.org/guide/#vue-single-file-components'
-const chartUpdateError = 'Update ERROR: chart instance not found'
+var chartUpdateError = 'Update ERROR: chart instance not found'
 
-const generateChart = (chartId, chartType, chartController) => {
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    })
+  } else {
+    obj[key] = value
+  }
+  return obj
+}
+function _objectSpread(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i] != null ? arguments[i] : {}
+    var ownKeys = Object.keys(source)
+    if (typeof Object.getOwnPropertySymbols === 'function') {
+      ownKeys = ownKeys.concat(
+        Object.getOwnPropertySymbols(source).filter(function (sym) {
+          return Object.getOwnPropertyDescriptor(source, sym).enumerable
+        })
+      )
+    }
+    ownKeys.forEach(function (key) {
+      _defineProperty(target, key, source[key])
+    })
+  }
+  return target
+}
+var generateChart = function (chartId, chartType, chartController) {
   return defineComponent({
     props: {
       chartData: {
@@ -120,7 +210,7 @@ const generateChart = (chartId, chartType, chartController) => {
       },
       chartOptions: {
         type: Object,
-        default: () => {}
+        default: function () {}
       },
       datasetIdKey: {
         type: String,
@@ -144,50 +234,45 @@ const generateChart = (chartId, chartType, chartController) => {
       },
       styles: {
         type: Object,
-        default: () => {}
+        default: function () {}
       },
       plugins: {
         type: Array,
-        default: () => []
+        default: function () {
+          return []
+        }
       }
     },
-    setup(props, context) {
-      Chart.register(chartController)
-      const _chart = shallowRef(null)
-      const canvasEl = ref(null)
-      function renderChart(data, options) {
+    setup: function (props, context) {
+      var renderChart = function renderChart(data, options) {
         if (_chart.value !== null) {
           chartDestroy(toRaw(_chart.value), context)
         }
         if (canvasEl.value === null) {
           throw new Error(templateError)
         } else {
-          const chartData = getChartData(data, props.datasetIdKey)
-          const canvasEl2DContext = canvasEl.value.getContext('2d')
+          var chartData = getChartData(data, props.datasetIdKey)
+          var canvasEl2DContext = canvasEl.value.getContext('2d')
           if (canvasEl2DContext !== null) {
             _chart.value = new Chart(canvasEl2DContext, {
               type: chartType,
               data: isProxy(data) ? new Proxy(chartData, {}) : chartData,
-              options,
+              options: options,
               plugins: props.plugins
             })
           }
         }
       }
-      function chartDataHandler(newValue, oldValue) {
-        const newData = isProxy(newValue)
+      var chartDataHandler = function chartDataHandler(newValue, oldValue) {
+        var newData = isProxy(newValue)
           ? toRaw(newValue)
-          : {
-              ...newValue
-            }
-        const oldData = isProxy(oldValue)
+          : _objectSpread({}, newValue)
+        var oldData = isProxy(oldValue)
           ? toRaw(oldValue)
-          : {
-              ...oldValue
-            }
+          : _objectSpread({}, oldValue)
         if (Object.keys(oldData).length > 0) {
-          const chart = toRaw(_chart.value)
-          const isEqualLabelsAndDatasetsLength = compareData(newData, oldData)
+          var chart = toRaw(_chart.value)
+          var isEqualLabelsAndDatasetsLength = compareData(newData, oldData)
           if (isEqualLabelsAndDatasetsLength && chart !== null) {
             setChartDatasets(
               chart === null || chart === void 0 ? void 0 : chart.data,
@@ -216,8 +301,8 @@ const generateChart = (chartId, chartType, chartController) => {
           chartCreate(renderChart, props.chartData, props.chartOptions, context)
         }
       }
-      function chartOptionsHandler(options) {
-        const chart = toRaw(_chart.value)
+      var chartOptionsHandler = function chartOptionsHandler(options) {
+        var chart = toRaw(_chart.value)
         if (chart !== null) {
           setChartOptions(chart, options)
           updateChart()
@@ -225,29 +310,40 @@ const generateChart = (chartId, chartType, chartController) => {
           chartCreate(renderChart, props.chartData, props.chartOptions, context)
         }
       }
-      function updateChart() {
-        const chart = toRaw(_chart.value)
+      var updateChart = function updateChart() {
+        var chart = toRaw(_chart.value)
         if (chart !== null) {
           chartUpdate(chart, context)
         } else {
           console.error(chartUpdateError)
         }
       }
+      Chart.register(chartController)
+      var _chart = shallowRef(null)
+      var canvasEl = ref(null)
       watch(
-        () => props.chartData,
-        (newValue, oldValue) => chartDataHandler(newValue, oldValue),
+        function () {
+          return props.chartData
+        },
+        function (newValue, oldValue) {
+          return chartDataHandler(newValue, oldValue)
+        },
         {
           deep: true
         }
       )
       watch(
-        () => props.chartOptions,
-        newValue => chartOptionsHandler(newValue),
+        function () {
+          return props.chartOptions
+        },
+        function (newValue) {
+          return chartOptionsHandler(newValue)
+        },
         {
           deep: true
         }
       )
-      onMounted(() => {
+      onMounted(function () {
         if (
           'datasets' in props.chartData &&
           props.chartData.datasets.length > 0
@@ -255,17 +351,17 @@ const generateChart = (chartId, chartType, chartController) => {
           chartCreate(renderChart, props.chartData, props.chartOptions, context)
         }
       })
-      onBeforeUnmount(() => {
+      onBeforeUnmount(function () {
         if (_chart.value !== null) {
           chartDestroy(toRaw(_chart.value), context)
         }
       })
       context.expose({
         chart: _chart,
-        updateChart
+        updateChart: updateChart
       })
-      return () =>
-        h(
+      return function () {
+        return h(
           'div',
           {
             style: props.styles,
@@ -280,33 +376,34 @@ const generateChart = (chartId, chartType, chartController) => {
             })
           ]
         )
+      }
     }
   })
 }
-const Bar = /* #__PURE__ */ generateChart('bar-chart', 'bar', BarController)
-const Doughnut = /* #__PURE__ */ generateChart(
+var Bar = /* #__PURE__ */ generateChart('bar-chart', 'bar', BarController)
+var Doughnut = /* #__PURE__ */ generateChart(
   'doughnut-chart',
   'doughnut',
   DoughnutController
 )
-const Line = /* #__PURE__ */ generateChart('line-chart', 'line', LineController)
-const Pie = /* #__PURE__ */ generateChart('pie-chart', 'pie', PieController)
-const PolarArea = /* #__PURE__ */ generateChart(
+var Line = /* #__PURE__ */ generateChart('line-chart', 'line', LineController)
+var Pie = /* #__PURE__ */ generateChart('pie-chart', 'pie', PieController)
+var PolarArea = /* #__PURE__ */ generateChart(
   'polar-chart',
   'polarArea',
   PolarAreaController
 )
-const Radar = /* #__PURE__ */ generateChart(
+var Radar = /* #__PURE__ */ generateChart(
   'radar-chart',
   'radar',
   RadarController
 )
-const Bubble = /* #__PURE__ */ generateChart(
+var Bubble = /* #__PURE__ */ generateChart(
   'bubble-chart',
   'bubble',
   BubbleController
 )
-const Scatter = /* #__PURE__ */ generateChart(
+var Scatter = /* #__PURE__ */ generateChart(
   'scatter-chart',
   'scatter',
   ScatterController
